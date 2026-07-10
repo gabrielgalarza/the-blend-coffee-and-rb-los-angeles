@@ -185,3 +185,52 @@ document.querySelectorAll('.partner, .stat, .aud, .vendor').forEach((el) => {
   }
 })();
 
+// Pre-Register: open the Sweatpals waitlist / early-access sign-up in a modal.
+// The event is in pre-registration (waitlist) mode, so we load the Sweatpals
+// checkout embed (the "Join waitlist" form) inside our own dialog. Buttons keep
+// a real Sweatpals href as a no-JS fallback.
+(function () {
+  const CHECKOUT_URL =
+    'https://sweatpals.com/embed/the-blend-coffee-and-rb-los-angeles/checkout' +
+    '?priceTierId=517858af-6ac6-4b16-9b68-e6953d103acb&waitlist=true&size=lg&colorHex=FFD60A&fontFamily=Inter';
+
+  let dialog;
+
+  function build() {
+    dialog = document.createElement('dialog');
+    dialog.className = 'sp-modal';
+    dialog.innerHTML =
+      '<div class="sp-modal__bar"><button type="button" class="sp-modal__close" aria-label="Close">×</button></div>' +
+      '<iframe class="sp-modal__frame" title="Pre-Register for The Blend LA" allow="payment"></iframe>';
+    document.body.appendChild(dialog);
+    dialog.querySelector('.sp-modal__close').addEventListener('click', () => dialog.close());
+    // Click on the backdrop (the dialog element itself) closes it
+    dialog.addEventListener('click', (e) => { if (e.target === dialog) dialog.close(); });
+    // Unload the iframe when closed so it reloads fresh next time
+    dialog.addEventListener('close', () => { dialog.querySelector('iframe').src = 'about:blank'; });
+  }
+
+  function open() {
+    if (!dialog) build();
+    dialog.querySelector('iframe').src = CHECKOUT_URL;
+    dialog.showModal();
+    if (window.amplitude && typeof window.amplitude.track === 'function') {
+      window.amplitude.track('cta_pre_register_clicked', { via: 'modal' });
+    }
+    if (typeof window.fbq === 'function') {
+      window.fbq('track', 'Lead', { content_name: 'The Blend LA Pre-Register' });
+    }
+  }
+
+  document.querySelectorAll('[data-preregister]').forEach((el) => {
+    el.addEventListener('click', (e) => {
+      // Progressive enhancement: if <dialog> is supported, open the modal;
+      // otherwise let the link fall through to the Sweatpals page.
+      if (typeof HTMLDialogElement !== 'undefined') {
+        e.preventDefault();
+        open();
+      }
+    });
+  });
+})();
+
