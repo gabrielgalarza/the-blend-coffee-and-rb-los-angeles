@@ -1016,11 +1016,6 @@ button { font: inherit; }
   filter: brightness(0);
   opacity: 0.9;
 }
-/* The Hennessy logo ships as a black mark on a solid white background, so the
-   default brightness(0) filter would render it as a solid black box. The
-   partner card background is already white, so dropping the filter lets the
-   logo sit seamlessly. */
-.partner__img[src*="hennessy"] { filter: none; opacity: 1; height: 56px; }
 .partner__role {
   font-size: 13px;
   color: var(--gray-500);

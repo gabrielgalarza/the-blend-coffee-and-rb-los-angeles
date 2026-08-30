@@ -152,16 +152,15 @@ document.querySelectorAll('.partner, .stat, .aud, .vendor').forEach((el) => {
     }
   }
 
-  // Register CTA clicks: these now link out to the Sweatpals event page.
-  // Fire both the Amplitude event and the Meta "Lead" (registration intent).
-  document.querySelectorAll('[data-register]').forEach((el) => {
+  // Pre-Register CTA clicks. The modal handler below fires its own events for
+  // the modal path; this records which on-page CTA was used.
+  document.querySelectorAll('[data-preregister]').forEach((el) => {
     el.addEventListener('click', () => {
       const section = el.closest('section');
       track('cta_pre_register_clicked', {
         location: section ? section.id || 'unknown' : 'nav',
         text: el.textContent.trim()
       });
-      metaTrack('Lead', { content_name: 'The Blend Register' });
     });
   });
 
@@ -173,13 +172,13 @@ document.querySelectorAll('.partner, .stat, .aud, .vendor').forEach((el) => {
   });
 
   // Hero secondary CTA
-  const heroSee = document.querySelector('.hero__ctas a[href="#programming"]');
+  const heroSee = document.querySelector('.hero__ctas a[href="#included"]');
   if (heroSee) {
-    heroSee.addEventListener('click', () => track('hero_see_programming_clicked'));
+    heroSee.addEventListener('click', () => track('hero_see_included_clicked'));
   }
 
   // Partner email link
-  const sponsorEmail = document.querySelector('a[href^="mailto:gabrgalarza"]');
+  const sponsorEmail = document.querySelector('a[href^="mailto:experienceott"]');
   if (sponsorEmail) {
     sponsorEmail.addEventListener('click', () => track('sponsor_email_clicked'));
   }
