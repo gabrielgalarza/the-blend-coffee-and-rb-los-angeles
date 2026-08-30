@@ -911,6 +911,38 @@ button { font: inherit; }
   width: 100%;
 }
 
+/* Two partners side by side: logo + label only, no body copy, so the
+   gallery below sits higher on the page. */
+.partner-pair {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  margin: 16px 0 8px;
+}
+.partner-pair__item {
+  background: var(--white);
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-lg);
+  padding: 22px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+.partner-pair .presenting__logo { width: 100%; min-height: 92px; }
+.partner-pair .presenting__label { margin-bottom: 0; }
+.partner-pair__wordmark {
+  font-family: var(--display);
+  font-size: clamp(15px, 1.7vw, 19px);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 1.25;
+}
+@media (min-width: 720px) {
+  .partner-pair { grid-template-columns: 1fr 1fr; gap: 20px; }
+}
+
 .vendor-grid {
   display: grid;
   gap: 14px;
@@ -1106,6 +1138,9 @@ button { font: inherit; }
 }
 @media (min-width: 1080px) {
   .gallery { grid-template-columns: repeat(4, 1fr); }
+}
+@media (min-width: 1400px) {
+  .gallery { grid-template-columns: repeat(5, 1fr); }
 }
 
 /* ============ REGISTER ============ */
