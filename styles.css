@@ -929,7 +929,10 @@ button { font: inherit; }
   align-items: center;
   gap: 14px;
 }
-.partner-pair .presenting__logo { width: 100%; min-height: 92px; }
+.partner-pair__item { justify-content: space-between; }
+/* Fixed box height keeps the two logos, and the labels under them,
+   on the same baseline even though one is an image and one is text. */
+.partner-pair .presenting__logo { width: 100%; height: 108px; }
 .partner-pair .presenting__label { margin-bottom: 0; }
 .partner-pair__wordmark {
   font-family: var(--display);
