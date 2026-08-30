@@ -100,7 +100,7 @@ document.querySelectorAll('[data-rail]').forEach((rail) => {
   });
 
   // Pause only while pointer is over the rail; resume on leave.
-  // Auto-scroll never stops permanently — it always resumes.
+  // Auto-scroll never stops permanently; it always resumes.
   rail.addEventListener('mouseenter', () => { hoverPaused = true; });
   rail.addEventListener('mouseleave', () => { hoverPaused = false; });
 
